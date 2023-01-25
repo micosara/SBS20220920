@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans>
+	<!-- datasource -->
+	<bean id="sqlSessionFactory"
+		  class="com.jsp.datasource.MySqlSessionFactory" />
+		  
+	<!-- Repository -->
+	<bean id="memberDAO" class="com.jsp.dao.MemberDAOImpl" />
+	<bean id = "pdsDAO" class="com.jsp.dao.PdsDAOImpl" />
+	<bean id = "attachDAO" class="com.jsp.dao.AttachDAOImpl" />
+	<bean id = "menuDAO" class="com.jsp.dao.MenuDAOImpl" />	
+	
+	<!-- Service -->
+	<bean id="menuService" class="com.jsp.service.MenuServiceImpl">		
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="menuDAO" ref-value="menuDAO" />
+	</bean>
+	<bean id="pdsService" class="com.jsp.service.PdsServiceImpl" >
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="pdsDAO" ref-value="pdsDAO" />	
+		<property name="attachDAO" ref-value="attachDAO" />	
+	</bean>
+	<bean id="memberService"
+	      class="com.jsp.service.MemberServiceImpl" >
+	    <property name="sqlSessionFactory"  ref-value="sqlSessionFactory"/>
+		<property name="memberDAO"  ref-value="memberDAO"/>      
+	</bean>
+</beans>
+
+
+
+
+

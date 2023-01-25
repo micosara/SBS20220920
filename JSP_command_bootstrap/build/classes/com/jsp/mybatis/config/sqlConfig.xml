@@ -1,0 +1,48 @@
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties resource="com/jsp/properties/jdbc.properties" />
+	
+	
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+		
+		<typeAlias type="com.jsp.dto.MemberVO"  alias="member"/>
+		<typeAlias type="com.jsp.dto.PdsVO" alias="pds" />	
+		<typeAlias type="com.jsp.dto.AttachVO" alias="attach" />
+		<typeAlias type="com.jsp.dto.MenuVO" alias="menu" />
+		
+	</typeAliases>
+	
+	
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+				
+				<!-- pool setting -->
+				<property value="2" name="poolMaximumActiveConnections"/>
+				<property value="2" name="poolMaximumIdleConnections"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/jsp/mybatis/mappers/Member-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/Pds-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/Attach-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/Menu-Mapper.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+
