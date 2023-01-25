@@ -15,6 +15,7 @@
 		<typeAlias type="com.jsp.dto.AttachVO" alias="attach" />
 		<typeAlias type="com.jsp.dto.MenuVO" alias="menu" />
 		<typeAlias type="com.jsp.dto.BoardVO" alias="board" />
+		<typeAlias type="com.jsp.dto.NoticeVO" alias="notice" />
 		
 	</typeAliases>
 	
@@ -41,6 +42,7 @@
 		<mapper resource="com/jsp/mybatis/mappers/Attach-Mapper.xml"/>
 		<mapper resource="com/jsp/mybatis/mappers/Menu-Mapper.xml"/>
 		<mapper resource="com/jsp/myBatis/mappers/Board-Mapper.xml"/>
+		<mapper resource="com/jsp/myBatis/mappers/Notice-Mapper.xml"/>
 	</mappers>
 </configuration>
 
