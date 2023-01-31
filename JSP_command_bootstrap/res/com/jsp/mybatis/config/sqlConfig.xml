@@ -42,6 +42,7 @@
 		<mapper resource="com/jsp/mybatis/mappers/Attach-Mapper.xml"/>
 		<mapper resource="com/jsp/mybatis/mappers/Menu-Mapper.xml"/>		
 		<mapper resource="com/jsp/mybatis/mappers/Notice-Mapper.xml"/>
+		<mapper resource="com/jsp/mybatis/mappers/Board-Mapper.xml"/>
 	</mappers>
 </configuration>
 
