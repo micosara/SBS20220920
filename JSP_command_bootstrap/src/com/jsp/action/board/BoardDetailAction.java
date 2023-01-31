@@ -19,8 +19,15 @@ public class BoardDetailAction implements Action{
 		String url = "/board/detail";
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
+		String from = request.getParameter("from");
 		
-		BoardVO board=boardService.getBoard(bno);		
+		BoardVO board;
+		if(from!=null && from.equals("list")) {
+			board=boardService.getBoard(bno);
+			url="redirect:/board/detail.do?bno="+bno;
+		}else {				
+			board=boardService.getBoardForModify(bno);
+		}
 
 		request.setAttribute("board", board);
 		
