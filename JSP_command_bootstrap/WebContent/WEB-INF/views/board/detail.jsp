@@ -143,5 +143,16 @@ function remove_go(){
 }
 </script>
 
+<%@ include file="./reply_js.jsp" %>
 </body> 
+
+
+
+
+
+
+
+
+
+
  

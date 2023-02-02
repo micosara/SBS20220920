@@ -15,6 +15,10 @@
 	<bean id = "replyDAO" class="com.jsp.dao.ReplyDAOImpl" />
 	
 	<!-- Service -->
+	<bean id="replyService" class="com.jsp.service.ReplyServiceImpl" >
+		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
+		<property name="replyDAO" ref-value="replyDAO" />
+	</bean>	
 	<bean id="boardService" class="com.jsp.service.BoardServiceImpl" >
 		<property name="sqlSessionFactory" ref-value="sqlSessionFactory" />
 		<property name="boardDAO" ref-value="boardDAO" />	
