@@ -10,7 +10,7 @@
     </div>	
 	<div class="timeline-item" >
   		<span class="time">
-    		<i class="fa fa-clock"></i>{{regdate}}
+    		<i class="fa fa-clock"></i>{{prettifyDate regdate}}
 	 		<a class="btn btn-primary btn-xs {{rno}}-a" id="modifyReplyBtn" data-rno={{rno}}
 				onclick="replyModifyModal_go('{{rno}}');"
 	    		data-replyer={{replyer}} data-toggle="modal" data-target="#modifyModal">Modify</a>
@@ -44,6 +44,16 @@ function printData(replyArr,target,templateObject){
 	$('.replyLi').remove();
 	target.after(html);
 }
+
+Handlebars.registerHelper({
+	"prettifyDate":function(timeValue){ //Handlbars에 날짜출력함수 등록
+						var dateObj=new Date(timeValue);
+						var year=dateObj.getFullYear();
+						var month=dateObj.getMonth()+1;
+						var date=dateObj.getDate();
+						return year+"/"+month+"/"+date;
+					}
+});
 </script>
 
 
