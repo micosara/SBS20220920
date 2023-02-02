@@ -12,6 +12,7 @@
 	<bean id = "menuDAO" class="com.jsp.dao.MenuDAOImpl" />	
 	<bean id = "noticeDAO" class="com.jsp.dao.NoticeDAOImpl" />
 	<bean id = "boardDAO" class="com.jsp.dao.BoardDAOImpl" />
+	<bean id = "replyDAO" class="com.jsp.dao.ReplyDAOImpl" />
 	
 	<!-- Service -->
 	<bean id="boardService" class="com.jsp.service.BoardServiceImpl" >
