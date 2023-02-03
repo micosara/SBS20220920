@@ -13,6 +13,7 @@
     		<i class="fa fa-clock"></i>{{prettifyDate regdate}}
 	 		<a class="btn btn-primary btn-xs {{rno}}-a" id="modifyReplyBtn" data-rno={{rno}}
 				onclick="replyModifyModal_go('{{rno}}');"
+				style="display:{{visibleByLoginCheck replyer}};"
 	    		data-replyer={{replyer}} data-toggle="modal" data-target="#modifyModal">Modify</a>
   		</span>
 	
@@ -23,6 +24,8 @@
 
 {{/each}}	
 </script>
+
+
 
 
 <script>
@@ -52,8 +55,40 @@ Handlebars.registerHelper({
 						var month=dateObj.getMonth()+1;
 						var date=dateObj.getDate();
 						return year+"/"+month+"/"+date;
-					}
+					},
+	"visibleByLoginCheck":function(replyer){
+		var result="none";		
+		if(replyer == "${loginUser.id}") result="visible";		
+		return result;						  
+	}
 });
+</script>
+
+<script>
+function replyRegist_go(){
+	//alert("add reply click");
+	var replytext=$('#newReplyText').val();	
+	
+	var data={
+			"bno":"${board.bno}",
+			"replyer":"${loginUser.id}",
+			"replytext":replytext	
+	}
+	
+	$.ajax({
+		url:"<%=request.getContextPath()%>/reply/regist.do",
+		type:"post",
+		data:JSON.stringify(data),		
+		contentType:'application/json',
+		success:function(data){
+			
+		},
+		error:function(error){
+			AjaxErrorSecurityRedirectHandler(error.status);	
+		}
+	});
+}
+
 </script>
 
 

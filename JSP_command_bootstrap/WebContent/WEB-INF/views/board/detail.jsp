@@ -106,7 +106,7 @@
 					</div>
 					<div class="card-footer">
 						<label for="newReplyText">Reply Text</label>
-						<input class="form-control" type="text"	placeholder="REPLY TEXT" id="newReplyText">
+						<input class="form-control" type="text"	placeholder="REPLY TEXT" id="newReplyText"/>						
 						<br/>
 						<button type="button" class="btn btn-primary" id="replyAddBtn" onclick="replyRegist_go();">ADD REPLY</button>
 					</div>				
