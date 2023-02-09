@@ -12,7 +12,37 @@
 	<bean id="replyDAO" class="com.jsp.dao.ReplyDAOImpl" />
 	<bean id="pdsDAO" class="com.jsp.dao.PdsDAOImpl" />
 	<bean id="attachDAO" class="com.jsp.dao.AttachDAOImpl" />
-
+	
+	<bean id="menuDAOBean" class="com.spring.dao.MenuDAOImpl"
+		p:menuDAO-ref="menuDAO"
+		p:session-ref="sqlSession"
+	/>
+	<bean id="memberDAOBean" class="com.spring.dao.MemberDAOImpl"
+		p:memberDAO-ref="memberDAO"
+		p:session-ref="sqlSession"		
+	 />
+	 <bean id="noticeDAOBean" class="com.spring.dao.NoticeDAOImpl"
+		p:noticeDAO-ref="noticeDAO"
+		p:session-ref="sqlSession"	
+	 />
+	 <bean id="boardDAOBean" class="com.spring.dao.BoardDAOImpl"
+		p:boardDAO-ref="boardDAO"
+		p:session-ref="sqlSession"	
+	 />
+	 <bean id="replyDAOBean" class="com.spring.dao.ReplyDAOImpl"
+		p:replyDAO-ref="replyDAO"
+		p:session-ref="sqlSession"	
+	 />
+	  <bean id="pdsDAOBean" class="com.spring.dao.PdsDAOImpl"
+		p:pdsDAO-ref="pdsDAO"
+		p:session-ref="sqlSession"	
+	 />
+	 <bean id="attachDAOBean" class="com.spring.dao.AttachDAOImpl"
+		p:attachDAO-ref="attachDAO"
+		p:session-ref="sqlSession"	
+	 />
+	
+	
 	<!-- Service -->
 	<bean id="memberService"  class="com.jsp.service.MemberServiceImpl"
 	p:memberDAO-ref="memberDAO"
