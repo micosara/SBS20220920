@@ -1,0 +1,28 @@
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+		
+		<typeAlias type="com.jsp.dto.MemberVO"  alias="member"/>
+		<typeAlias type="com.jsp.dto.PdsVO" alias="pds" />	
+		<typeAlias type="com.jsp.dto.AttachVO" alias="attach" />
+		<typeAlias type="com.jsp.dto.MenuVO" alias="menu" />
+		<typeAlias type="com.jsp.dto.BoardVO" alias="board" />
+		<typeAlias type="com.jsp.dto.NoticeVO" alias="notice" />
+		<typeAlias type="com.jsp.dto.ReplyVO" alias="reply" />
+	</typeAliases>
+	
+	
+	
+</configuration>
+
+
+
+
+
