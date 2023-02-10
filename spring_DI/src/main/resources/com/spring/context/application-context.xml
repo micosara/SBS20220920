@@ -44,6 +44,34 @@
 	
 	
 	<!-- Service -->
-	
+	<bean id="menuService" class="com.spring.service.MenuServiceImpl" 
+		p:menuDAO-ref="menuDAOBean"
+	/>
+	<bean id="memberService" class="com.spring.service.MemberServiceImpl"
+		p:memberDAO-ref="memberDAOBean"
+	/>
+	<bean id="noticeService" class="com.spring.service.NoticeServiceImpl" 
+		p:noticeDAO-ref="noticeDAOBean"
+	/>
+	<bean id="boardService" class="com.spring.service.BoardServiceImpl"
+		p:boardDAO-ref="boardDAOBean"
+		p:replyDAO-ref="replyDAOBean"
+	/>
+	<bean id="pdsService" class="com.spring.service.PdsServiceImpl"
+		p:pdsDAO-ref="pdsDAOBean"
+		p:attachDAO-ref="attachDAOBean"
+	/>
+	<bean id="replyService" class="com.spring.service.ReplyServiceImpl"
+		p:replyDAO-ref="replyDAOBean"		
+	/>
 
 </beans>
+
+
+
+
+
+
+
+
+
