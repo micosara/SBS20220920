@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jsp.command.SearchCriteria;
+import com.spring.command.MultiPartCommand;
 
 @Controller
 public class MVCController {
@@ -60,6 +62,26 @@ public class MVCController {
 		
 		return url;
 	}
+	
+	@PostMapping(value="/multipartHttpServletRequest",produces="text/plain;charset=utf-8")
+	public String uploadByMultipartHttpServletRequest(MultipartHttpServletRequest request)
+			throws Exception{
+		
+		String title = request.getParameter("title");
+		MultipartFile multi = request.getFile("file");
+		
+		return uploadByMultipartFile(title,multi,request);
+	}
+	
+	@PostMapping(value = "/commandObject", produces="text/plain;charset=utf-8")
+	public String uploadByCommandObject(MultiPartCommand command, 
+										HttpServletRequest request) throws Exception {
+		MultipartFile multi = command.getFile();
+		String title = command.getTitle();
+		
+		return uploadByMultipartFile(title,multi,request);
+	}
+	
 }
 
 
