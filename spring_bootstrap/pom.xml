@@ -22,7 +22,8 @@
 		<org.apache.commons-dbcp2-version>2.5.0</org.apache.commons-dbcp2-version>
 		<org.mybatis-version>3.5.6</org.mybatis-version>
 		<org.mybatis.spring-version>2.0.6</org.mybatis.spring-version>
-
+		<opensymphony.sitemesh-version>2.4.2</opensymphony.sitemesh-version>
+		
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -81,6 +82,12 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>${org.mybatis.spring-version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/opensymphony/sitemesh -->
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>${opensymphony.sitemesh-version}</version>
 		</dependency>
 
 
