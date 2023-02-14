@@ -136,7 +136,7 @@ public class MemberController {
 		
 		// 삭제되는 회원이 로그인 회원인경우 로그아웃 해야함.
 		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-		if (loginUser.getId().equals(member.getId())) {
+		if (loginUser!=null && loginUser.getId().equals(member.getId())) {
 			session.invalidate();
 		}
 		
