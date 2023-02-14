@@ -30,7 +30,6 @@
 		<div class="card" style="min-width:450px;">	
 			<div class="card-body">	
 				<div class="row">					
-					<input type="hidden" name="oldPicture"  value="${member.picture }"/>
 					<input type="file" id="inputFile" onchange="picture_go();" name="picture" style="display:none" />
 					<div class="input-group col-md-12">
 						<div class="col-md-12" style="text-align: center;">
@@ -38,7 +37,7 @@
 							<div class="input-group input-group-sm">
 								<label for="inputFile" class=" btn btn-warning btn-sm btn-flat input-group-addon">사진변경</label>
 								<input id="inputFileName" class="form-control" type="text" name="tempPicture" disabled
-									value="${member.picture.split('\\$\\$')[1] }"/>
+									value="${member.picture }"/>
 							</div>						
 						</div>												
 					</div>

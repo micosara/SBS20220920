@@ -2,12 +2,12 @@ package kr.ac.sbs.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,7 @@ import com.jsp.command.SearchCriteria;
 import com.jsp.dto.MemberVO;
 import com.jsp.service.MemberService;
 
+import kr.ac.sbs.command.MemberModifyCommand;
 import kr.ac.sbs.command.MemberRegistCommand;
 
 @Controller
@@ -60,6 +61,92 @@ public class MemberController {
 		return url;
 	}
 
+	@GetMapping("/detail")
+	public String detail(String id, HttpServletRequest request) throws Exception {
+
+		String url = "/member/detail";
+
+		MemberVO member = memberService.getMember(id);
+		request.setAttribute("member", member);
+
+		return url;
+	}
+
+	@GetMapping("/modifyForm")
+	public String modifyForm(String id, HttpServletRequest request) throws Exception {
+
+		String url = "/member/modify";
+
+		MemberVO member = memberService.getMember(id);
+
+		String picture = MakeFileName.parseFileNameFromUUID(member.getPicture(), "\\$\\$");
+		member.setPicture(picture);
+
+		request.setAttribute("member", member);
+
+		return url;
+	}
+
+	@PostMapping(value = "/modify", produces = "text/plain;charset=utf-8")
+	public String modify(MemberModifyCommand modifyReq, 
+						 HttpServletRequest request,
+						 HttpSession session) throws Exception {
+		String url = "/member/modify_success";
+
+		MemberVO member = modifyReq.toMember();
+
+		// 신규 파일 변경 및 기존 파일 삭제
+		String oldPicture = memberService.getMember(member.getId()).getPicture();
+		if (modifyReq.getPicture() != null && modifyReq.getPicture().getSize() > 0) {
+			String fileName = savePicture(oldPicture, modifyReq.getPicture());
+			member.setPicture(fileName);
+		} else {
+			member.setPicture(oldPicture);
+		}
+
+		// DB 내용 수정
+		memberService.modify(member);
+
+		// 로그인한 사용자의 경우 수정된 정보로 session 업로드
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		if (loginUser != null && member.getId().equals(loginUser.getId())) {
+			session.setAttribute("loginUser", memberService.getMember(member.getId()));
+		}
+
+		request.setAttribute("member",member);
+		
+		return url;
+	}
+
+	@GetMapping(value = "/remove")
+	public String remove(String id, HttpServletRequest request, HttpSession session) 
+																	throws Exception {		
+		String url = "/member/remove";
+				
+		// 이미지 파일을 삭제
+		MemberVO member = memberService.getMember(id);
+		String savePath = this.picturePath;
+		File imageFile = new File(savePath, member.getPicture());
+		if (imageFile.exists()) {
+			imageFile.delete();
+		}
+		
+		//DB삭제
+		memberService.remove(id);
+		
+		// 삭제되는 회원이 로그인 회원인경우 로그아웃 해야함.
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+		if (loginUser.getId().equals(member.getId())) {
+			session.invalidate();
+		}
+		
+		request.setAttribute("member", member);
+		
+		return url;
+		
+	}
+	
+	
 	@Resource(name = "picturePath")
 	private String picturePath;
 
@@ -72,10 +159,10 @@ public class MemberController {
 		if (!(multi == null || multi.isEmpty() || multi.getSize() > 1024 * 1024 * 1)) {
 			fileName = MakeFileName.toUUIDFileName(multi.getOriginalFilename(), "$$");
 			File storeFile = new File(uploadPath, fileName);
-			
-			//파일경로 생성
+
+			// 파일경로 생성
 			storeFile.mkdirs();
-			
+
 			// local HDD 에 저장.
 			multi.transferTo(storeFile);
 		}
@@ -112,7 +199,7 @@ public class MemberController {
 		return entity;
 
 	}
-	
+
 	@GetMapping("/idCheck")
 	@ResponseBody
 	public ResponseEntity<String> idCheck(String id) throws Exception {
@@ -128,12 +215,12 @@ public class MemberController {
 
 		return entity;
 	}
-	
+
 	@GetMapping("/getPicture")
 	public ResponseEntity<byte[]> getPicture(String id) throws Exception {
-		
+
 		MemberVO member = memberService.getMember(id);
-		
+
 		String picture = member.getPicture();
 		String imgPath = this.picturePath;
 
@@ -143,18 +230,13 @@ public class MemberController {
 		try {
 			in = new FileInputStream(new File(imgPath, picture));
 
-			//IOUtils.toByteArray() : <img src="">, style:background-url 만 사용...
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),HttpStatus.OK);
-		}finally {
-			if(in!=null)in.close();
+			// IOUtils.toByteArray() : <img src="">, style:background-url 만 사용...
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.OK);
+		} finally {
+			if (in != null)
+				in.close();
 		}
 		return entity;
 	}
-	
+
 }
-
-
-
-
-
-
