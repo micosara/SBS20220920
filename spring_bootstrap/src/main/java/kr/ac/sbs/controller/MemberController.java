@@ -1,11 +1,15 @@
 package kr.ac.sbs.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -108,4 +112,49 @@ public class MemberController {
 		return entity;
 
 	}
+	
+	@GetMapping("/idCheck")
+	@ResponseBody
+	public ResponseEntity<String> idCheck(String id) throws Exception {
+		ResponseEntity<String> entity = null;
+
+		MemberVO member = memberService.getMember(id);
+
+		if (member != null) {
+			entity = new ResponseEntity<String>("duplicated", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("", HttpStatus.OK);
+		}
+
+		return entity;
+	}
+	
+	@GetMapping("/getPicture")
+	public ResponseEntity<byte[]> getPicture(String id) throws Exception {
+		
+		MemberVO member = memberService.getMember(id);
+		
+		String picture = member.getPicture();
+		String imgPath = this.picturePath;
+
+		InputStream in = null;
+		ResponseEntity<byte[]> entity = null;
+
+		try {
+			in = new FileInputStream(new File(imgPath, picture));
+
+			//IOUtils.toByteArray() : <img src="">, style:background-url 만 사용...
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),HttpStatus.OK);
+		}finally {
+			if(in!=null)in.close();
+		}
+		return entity;
+	}
+	
 }
+
+
+
+
+
+
