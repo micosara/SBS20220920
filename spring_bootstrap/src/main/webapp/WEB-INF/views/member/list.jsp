@@ -127,7 +127,14 @@
   	MemberPictureThumb('<%=request.getContextPath()%>');
   }
 </script>
-  
+
+<script>
+<c:if test="${param.from eq 'regist'}">
+	alert("${member.name}님의 정보가 등록되었습니다.");
+	window.opener.location.reload();
+	window.close();
+</c:if>
+</script>  
   
   
   

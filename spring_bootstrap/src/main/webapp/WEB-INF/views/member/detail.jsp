@@ -100,9 +100,24 @@
 <script>
 
   window.onload=function(){
-  	MemberPictureThumb('<%=request.getContextPath()%>');
+  	MemberPictureThumb('<%=request.getContextPath()%>');  	
   }
 </script>
+
+<script>
+<c:if test="${not empty name}">
+	alert("${name}님의 정보가 수정되었습니다.");
+	window.opener.location.reload();
+</c:if>
+<c:if test="${param.from eq 'remove'}">
+	alert("${removeMember.name}님의 정보가 삭제되었습니다.");
+	window.opener.location.reload();
+	window.close();
+</c:if>
+
+</script>
+
+
   
   
   

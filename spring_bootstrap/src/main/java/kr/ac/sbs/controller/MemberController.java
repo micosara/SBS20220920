@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jsp.action.utils.MakeFileName;
 import com.jsp.command.SearchCriteria;
@@ -52,12 +53,15 @@ public class MemberController {
 	}
 
 	@PostMapping("/regist")
-	public String regist(MemberRegistCommand memberReq) throws Exception {
-		String url = "/member/regist_success";
+	public String regist(MemberRegistCommand memberReq,RedirectAttributes rttr) throws Exception {
+		String url = "redirect:/member/list.do";
 
 		MemberVO member = memberReq.toMemberVO();
 		memberService.regist(member);
 
+		rttr.addFlashAttribute("member",member);
+		rttr.addAttribute("from","regist");
+		
 		return url;
 	}
 
@@ -89,9 +93,9 @@ public class MemberController {
 
 	@PostMapping(value = "/modify", produces = "text/plain;charset=utf-8")
 	public String modify(MemberModifyCommand modifyReq, 
-						 HttpServletRequest request,
+						 RedirectAttributes rttr,
 						 HttpSession session) throws Exception {
-		String url = "/member/modify_success";
+		String url = "redirect:/member/detail.do";
 
 		MemberVO member = modifyReq.toMember();
 
@@ -113,15 +117,15 @@ public class MemberController {
 			session.setAttribute("loginUser", memberService.getMember(member.getId()));
 		}
 
-		request.setAttribute("member",member);
-		
+		rttr.addAttribute("id",member.getId());
+		rttr.addFlashAttribute("name",member.getName());
 		return url;
 	}
 
 	@GetMapping(value = "/remove")
-	public String remove(String id, HttpServletRequest request, HttpSession session) 
+	public String remove(String id,RedirectAttributes rttr, HttpSession session) 
 																	throws Exception {		
-		String url = "/member/remove";
+		String url = "redirect:/member/detail.do";
 				
 		// 이미지 파일을 삭제
 		MemberVO member = memberService.getMember(id);
@@ -140,7 +144,10 @@ public class MemberController {
 			session.invalidate();
 		}
 		
-		request.setAttribute("member", member);
+		rttr.addFlashAttribute("removeMember",member);
+		
+		rttr.addAttribute("from","remove");		
+		rttr.addAttribute("id",id);
 		
 		return url;
 		
@@ -221,6 +228,8 @@ public class MemberController {
 
 		MemberVO member = memberService.getMember(id);
 
+		if(member==null) return new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		
 		String picture = member.getPicture();
 		String imgPath = this.picturePath;
 
