@@ -41,7 +41,7 @@
    					 <div class="input-group row">
    					 	<!-- search bar -->
    					 	<!-- sort num -->
-					  	<select class="form-control col-md-3" name="perPageNum" id="perPageNum" onchange="list_go(1);">					  		  		
+					  	<select class="form-control col-md-3" name="perPageNum" id="perPageNum" onchange="list_go('${cri.page }');">					  		  		
 					  		<option value="10" ${cri.perPageNum eq 10 ? 'selected' : '' } >정렬개수</option>
 					  		<option value="2" ${cri.perPageNum eq 2 ? 'selected' : '' }>2개씩</option>
 					  		<option value="3" ${cri.perPageNum eq 3 ? 'selected' : '' }>3개씩</option>
