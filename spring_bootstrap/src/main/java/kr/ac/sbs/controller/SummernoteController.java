@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -76,8 +77,9 @@ public class SummernoteController {
 																	throws Exception {
 		ResponseEntity<String> result = null;
 
+		String fileName = URLDecoder.decode((String)data.get("fileName"), "utf-8");
 		String savePath = imgPath.replace("/", File.separator);
-		File target = new File(savePath, (String)data.get("fileName"));
+		File target = new File(savePath, fileName);
 
 		if (!target.exists()) {
 			result = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
