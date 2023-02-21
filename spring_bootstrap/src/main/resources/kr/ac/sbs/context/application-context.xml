@@ -17,6 +17,11 @@
 		<constructor-arg value="${uploadPath.summernote.img}" />      
 	</bean>
 	
+	<!-- file upload -->
+	<bean id="fileUploadPath" class="java.lang.String">
+		<constructor-arg value="${uploadPath.pds}"/>
+	</bean>
+	
 	<!-- repository -->
 	<bean id="memberDAO" class="com.jsp.dao.MemberDAOImpl" />
 	<bean id="menuDAO" class="com.jsp.dao.MenuDAOImpl" />

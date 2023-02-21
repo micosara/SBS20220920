@@ -21,6 +21,11 @@
 				p:defaultEncoding="utf-8"
 	/>	
 	
+	<!-- Bean named Resolver -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" 
+			p:order="1"
+	/>
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -30,5 +35,12 @@
 	<context:component-scan base-package="kr.ac.sbs.controller" />
 	
 	
+	<!-- Views -->
+	<beans:bean id="downloadFile" class="kr.ac.sbs.views.FileDownloadView" />
 	
 </beans:beans>
+
+
+
+
+

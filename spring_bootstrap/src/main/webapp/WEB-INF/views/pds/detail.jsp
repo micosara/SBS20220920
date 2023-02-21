@@ -110,8 +110,21 @@
 function submit_go(url,pno){	
 	location.href=url+"?pno="+pno;
 }
-</script>    
- 
+</script>
+
+<c:if test="${from eq 'modify'}" >
+	<script>
+		alert("정상적으로 수정되었습니다.");
+		window.opener.location.reload();
+	</script>
+</c:if>    
+<c:if test="${from eq 'remove'}" >
+	<script>
+		alert("삭제되었습니다.");
+		window.close();
+		window.opener.location.reload();
+	</script>
+</c:if> 
 
 
 
