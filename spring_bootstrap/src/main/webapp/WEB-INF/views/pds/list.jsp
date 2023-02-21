@@ -118,3 +118,16 @@
 		</div>
 	</section>
     
+
+<c:if test="${from eq 'regist' }">
+	<script>
+		alert("정상 등록되었습니다.");
+		window.close();
+		window.opener.location.reload();
+	</script>
+</c:if>    
+    
+    
+    
+    
+    
