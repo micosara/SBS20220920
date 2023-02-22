@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,8 +46,11 @@ public class BoardController {
 	}
 	
 	@PostMapping("/regist")
-	public String regist(BoardVO board,RedirectAttributes rttr)throws Exception{
+	public String regist(BoardVO board,HttpServletRequest request,RedirectAttributes rttr)throws Exception{
 		String url="redirect:/board/list.do";	
+		
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) board.setTitle(XSStitle);
 		
 		service.regist(board);
 		
@@ -87,10 +91,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modifyPost(BoardVO board,	 RedirectAttributes rttr) throws Exception{
+	public String modifyPost(BoardVO board,HttpServletRequest request, RedirectAttributes rttr) throws Exception{
 		
 		String url = "redirect:/board/detail.do";
 				
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) board.setTitle(XSStitle);
+		
 		service.modify(board);
 		
 		rttr.addFlashAttribute("from","modify");

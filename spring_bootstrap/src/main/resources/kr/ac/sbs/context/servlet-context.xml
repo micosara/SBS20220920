@@ -38,6 +38,15 @@
 	<!-- Views -->
 	<beans:bean id="downloadFile" class="kr.ac.sbs.views.FileDownloadView" />
 	
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/regist.do"/>
+			<mapping path="/**/modify.do" />						
+			<beans:bean class="kr.ac.sbs.interceptor.XSSRequestInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>
 
 

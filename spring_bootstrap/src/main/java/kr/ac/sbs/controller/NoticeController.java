@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,8 +50,12 @@ public class NoticeController {
 	}
 
 	@PostMapping("/regist")
-	public String regist(NoticeVO notice,RedirectAttributes rttr) throws Exception{
-		String url = "redirect:/notice/list";				
+	public String regist(NoticeVO notice,HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		String url = "redirect:/notice/list";		
+		
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) notice.setTitle(XSStitle);
+		
 		noticeService.regist(notice);	
 		
 		rttr.addFlashAttribute("from","regist");
@@ -92,8 +97,11 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String modifyPost(NoticeVO notice,RedirectAttributes rttr)throws Exception{
+	public String modifyPost(NoticeVO notice,HttpServletRequest request,RedirectAttributes rttr)throws Exception{
 		String url = "redirect:/notice/detail.do";
+		
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) notice.setTitle(XSStitle);		
 		
 		noticeService.modify(notice);
 		

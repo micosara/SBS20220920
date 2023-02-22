@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,7 +81,7 @@ public class PdsController {
 	}
 	
 	@PostMapping(value = "/regist", produces = "text/plain;charset=utf-8")
-	public String regist(PdsRegistCommand registReq, RedirectAttributes rttr) 
+	public String regist(PdsRegistCommand registReq, HttpServletRequest request,RedirectAttributes rttr) 
 																	throws Exception {
 		String url = "redirect:/pds/list.do";		
 				
@@ -90,7 +91,10 @@ public class PdsController {
 		List<AttachVO> attachList = saveFileToAttaches(multiFiles,savePath);
 		
 		//DB 
-		PdsVO pds = registReq.toPdsVO();						
+		PdsVO pds = registReq.toPdsVO();
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) pds.setTitle(XSStitle);
+		
 		pds.setAttachList(attachList);
 		service.regist(pds);
 		
@@ -148,7 +152,7 @@ public class PdsController {
 	}
 	
 	@PostMapping(value="/modify", produces = "text/plain;charset=utf-8")
-	public String modifyPOST(PdsModifyCommand modifyReq,RedirectAttributes rttr) throws Exception {
+	public String modifyPOST(PdsModifyCommand modifyReq,HttpServletRequest request,RedirectAttributes rttr) throws Exception {
 		String url = "redirect:/pds/detail.do";
 		
 		// 파일 삭제
@@ -171,7 +175,9 @@ public class PdsController {
 			= saveFileToAttaches(modifyReq.getUploadFile(), fileUploadPath);
 		
 		// PdsVO settting
-		PdsVO pds = modifyReq.toPdsVO();		
+		PdsVO pds = modifyReq.toPdsVO();	
+		String XSStitle = (String)request.getAttribute("XSStitle");
+		if(XSStitle !=null) pds.setTitle(XSStitle);
 		pds.setAttachList(attachList);
 		
 		// DB 저장
