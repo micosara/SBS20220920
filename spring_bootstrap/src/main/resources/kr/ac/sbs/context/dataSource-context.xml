@@ -12,21 +12,35 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
-		p:url="jdbc:oracle:thin:@localhost:1521:XE" p:username="JSP"
-		p:password="JSP" />
+		p:url="jdbc:oracle:thin:@localhost:1521:XE" 
+		p:username="JSP"
+		p:password="JSP" 
+		/>
 		
-		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="dataSource"
+	<bean id="dataSourceSpied"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSource" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL:::" />
+			</bean>
+		</property>
+	</bean>	
+		
+		
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSourceSpied"
 		p:configLocation="classpath:kr/ac/sbs/mybatis/config/sqlConfig.xml"
 		p:mapperLocations="classpath:kr/ac/sbs/mybatis/mappers/*-Mapper.xml"
 		/>
 		
-		<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
 		c:sqlSessionFactory-ref="sqlSessionFactory"
 		/>
 		
-		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-		p:dataSource-ref="dataSource"
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSourceSpied"
 		  />
 		
 </beans>

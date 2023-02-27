@@ -2,7 +2,6 @@ package kr.ac.sbs.service;
 
 import java.sql.SQLException;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +24,23 @@ public class LoginMemberServiceImpl extends MemberServiceImpl
 		super.setMemberDAO(memberDAO);
 	}
 	
+	
 	@Override
 	public void login(String id, String pwd) throws NotFoundIdException, InvalidPasswordException, SQLException {
+		
 		MemberVO member = memberDAO.selectMemberById(id);
 		if (member == null)	throw new NotFoundIdException();
 		if (!pwd.equals(member.getPwd())) throw new InvalidPasswordException();
 		
 	}
+
 	
 }
+
+
+
+
+
+
+
+

@@ -51,7 +51,9 @@ public class MemberController {
 		String url = "/member/regist";
 		return url;
 	}
-
+	
+	
+	
 	@PostMapping("/regist")
 	public String regist(MemberRegistCommand memberReq,
 						 HttpServletRequest request,
