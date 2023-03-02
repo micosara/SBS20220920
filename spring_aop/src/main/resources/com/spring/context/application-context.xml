@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/aop" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	
+	<beans:bean id="behavior" class="com.spring.pointcut.BehaviorImpl" />
+	
+	<beans:bean id="advice" class="com.spring.advisor.AdviceBehavior" />
+	
+	<config>
+		<aspect id="이가 썩지 않는 방법" ref="advice">
+			<pointcut expression="execution(public * com.spring.pointcut..밥먹기*(..))" id="식사하기" />
+			<pointcut expression="execution(public * com.spring.pointcut..잠자기*(..))" id="잠자기" />
+			<pointcut expression="execution(public * com.spring.pointcut..데이트*(..))" id="데이트" />
+			
+			<after method="chikachika" pointcut-ref="식사하기" />		
+			<before method="chikachika" pointcut-ref="잠자기" />		
+			<around method="chikachikaAround" pointcut-ref="데이트" />		
+		</aspect>
+	</config>
+</beans:beans>
+
+
+
+
+
+
