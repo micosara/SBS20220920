@@ -2,7 +2,8 @@ package kr.ac.sbs.service;
 
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.jsp.dto.MemberVO;
@@ -12,16 +13,15 @@ import com.spring.service.MemberServiceImpl;
 import kr.ac.sbs.exception.InvalidPasswordException;
 import kr.ac.sbs.exception.NotFoundIdException;
 
-@Service("loginMemberService")
+
 public class LoginMemberServiceImpl extends MemberServiceImpl
 								implements MemberService {
 
-	@Autowired
-	private MemberDAO memberDAO;
 
-	@Autowired
-	public LoginMemberServiceImpl(MemberDAO memberDAO) {
-		super.setMemberDAO(memberDAO);
+	private MemberDAO memberDAO;	
+
+	public void setChildMemberDAO(MemberDAO memberDAO) {
+		this.memberDAO = memberDAO;
 	}
 	
 	
