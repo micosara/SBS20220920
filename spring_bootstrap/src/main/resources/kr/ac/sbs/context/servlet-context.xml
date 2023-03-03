@@ -12,9 +12,9 @@
 				location="classpath:kr/ac/sbs/properties/uploadPath.properties"/>
 				
 	<!-- login user log path -->
-	<beans:bean id="loginUserLogSavePath" class="java.lang.String">
+	<!-- <beans:bean id="loginUserLogSavePath" class="java.lang.String">
 		<beans:constructor-arg value="${uploadPath.login.user.log}" />
-	</beans:bean>
+	</beans:bean> -->
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -53,12 +53,12 @@
 			<mapping path="/**/modify.do" />						
 			<beans:bean class="kr.ac.sbs.interceptor.XSSRequestInterceptor"/>
 		</interceptor>
-		<interceptor>
+		<!-- <interceptor>
 			<mapping path="/common/login.do"/>
 			<beans:bean class="kr.ac.sbs.interceptor.LoginUserLogInterceptor"
 					    p:savePath-ref="loginUserLogSavePath"
 			 />			 
-		</interceptor>
+		</interceptor> -->
 	</interceptors>
 	
 </beans:beans>
