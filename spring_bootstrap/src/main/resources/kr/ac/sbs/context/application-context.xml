@@ -63,7 +63,10 @@
 	<!-- for scheduler -->
 	<bean id="scheduledMemberDAO" class="kr.ac.sbs.dao.MemberDAOImpl"
 		p:session-ref="sqlSession"		
-	 />
+	/>
+	<bean id="schedulerDAO" class="kr.ac.sbs.dao.SchedulerDAOImpl"
+		p:session-ref="sqlSession"
+	/>
 	
 	<!-- Service -->
 	<bean id="menuService" class="com.spring.service.MenuServiceImpl" 
