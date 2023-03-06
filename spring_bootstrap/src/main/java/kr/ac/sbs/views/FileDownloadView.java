@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.MediaType;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.View;
 
 import com.jsp.action.utils.MakeFileName;
@@ -65,15 +66,13 @@ public class FileDownloadView implements View{
 		
 		// 파일 내보내기
 		OutputStream outStream = response.getOutputStream();
-		byte[] buffer = new byte[4096];
-		int bytesRead = -1;
-
-		while ((bytesRead = inStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, bytesRead);
+		
+		try {
+			FileCopyUtils.copy(inStream,outStream);
+		}finally {		
+			if(inStream!=null) inStream.close();
+			outStream.flush();
 		}
-
-		inStream.close();
-		outStream.close();
 	}
 
 }
